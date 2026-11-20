@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="집중 노트">
+<meta name="theme-color" content="#f7f3ea">
+<title>집중 노트</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+<style>
+@font-face{font-family:'DearFromsol';src:url('https://cdn.jsdelivr.net/gh/Project-Noonnu/2607161334@griun-fromsol-rg/griun-fromsol-rg/Griun_Fromsol-Rg.woff2') format('woff2');font-weight:400;font-display:swap}
+*{box-sizing:border-box;font-family:'DearFromsol',sans-serif;font-weight:400}
+.ti{font-family:tabler-icons!important}
+body{margin:0;padding:28px 20px 28px 60px;min-height:100vh;color:#3b3f45;font-size:17px;line-height:1.6;
+  background-color:#f7f3ea;
+  background-image:linear-gradient(90deg,transparent 40px,#e0b4a8 40px,#e0b4a8 42px,transparent 42px),repeating-linear-gradient(#f7f3ea 0 31px,#e6dfd0 31px 32px)}
+.wrap{max-width:560px;margin:0 auto}
+.head{margin-bottom:24px}
+.head h1{margin:0;font-size:32px;display:inline-block;background:linear-gradient(transparent 60%,rgba(214,186,110,.45) 60%);padding:0 4px}
+.head p{margin:4px 0 0;font-size:16px;color:#8a8478}
+.card{position:relative;background:#fffdf8;border:1px solid #e3dccd;border-radius:4px;padding:24px 20px 18px;margin-bottom:22px;box-shadow:2px 3px 0 rgba(60,55,45,.05)}
+.card::before{content:'';position:absolute;top:-11px;left:50%;width:92px;height:22px;transform:translateX(-50%) rotate(-2deg);
+  background:repeating-linear-gradient(90deg,rgba(255,255,255,.2) 0 2px,transparent 2px 7px),var(--tape,rgba(201,168,92,.72));
+  clip-path:polygon(0 0,100% 0,96% 16%,100% 32%,95% 50%,100% 67%,96% 84%,100% 100%,0 100%,4% 84%,0 68%,5% 50%,0 33%,4% 17%)}
+.card.t2{--tape:rgba(201,152,140,.72)}
+.card.t2::before{transform:translateX(-50%) rotate(2deg)}
+.card.t3{--tape:rgba(125,154,133,.72)}
+.lbl{font-size:16px;color:#8a8478;margin:0 0 6px}
+input{width:100%;height:42px;padding:0 4px;border:none;border-bottom:2px solid #d9d1bf;border-radius:0;font-size:18px;color:#3b3f45;background:transparent;outline:none}
+input:focus{border-bottom-color:#5a6e60}
+button{height:42px;padding:0 14px;border:1.5px solid #5a6e60;border-radius:8px;background:#fffdf8;font-size:17px;cursor:pointer;color:#4a5a4f}
+button:hover{background:#f0ede3}
+button:active{transform:translateY(1px)}
+.main{background:#5a6e60;color:#fffdf8}
+.main:hover{background:#4c5e51}
+.chip{height:auto;font-size:15px;padding:4px 12px;border-width:1px;border-color:#d9d1bf;color:#8a8478}
+.chip.on{border-color:#5a6e60;color:#3b3f45;background:linear-gradient(transparent 55%,rgba(214,186,110,.45) 55%)}
+.err{font-size:15px;color:#b4574a;margin:4px 0 0;min-height:20px}
+.stats{display:flex;justify-content:space-around;gap:8px;margin:6px 0 26px}
+.stat{width:clamp(88px,26vw,118px);aspect-ratio:1;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:relative;box-shadow:0 3px 8px rgba(60,55,45,.12)}
+.stat::after{content:'';position:absolute;inset:6px;border:1.5px dashed rgba(255,253,248,.9);border-radius:50%;pointer-events:none}
+.stat i{font-size:18px;opacity:.7}
+.stat p{margin:0;line-height:1.25}
+.stat .s{font-size:13px}
+.stat .n{font-size:24px}
+.stat:nth-child(1){background:#c7d1bf;transform:rotate(-6deg)}
+.stat:nth-child(2){background:#dcc3b4;transform:rotate(4deg)}
+.stat:nth-child(3){background:#c9d0d8;transform:rotate(-3deg)}
+.ruler{height:12px;border:1.5px solid #5a6e60;border-radius:3px;overflow:hidden;margin-bottom:16px;background:repeating-linear-gradient(90deg,#d9d1bf 0 1px,transparent 1px 10%)}
+.row{display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid #e6dfd0;font-size:18px}
+.row button{height:28px;width:28px;padding:0;border:none;font-size:20px;background:transparent}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="head">
+  <h1><i class="ti ti-notebook"></i> 집중 노트</h1>
+  <p>오늘도 한 페이지씩</p>
+</div>
+<div class="card">
+  <p class="lbl"><i class="ti ti-pencil"></i> 지금 할 일 딱 하나</p>
+  <input id="task" placeholder="과학 프린트 2쪽 읽기">
+  <p id="terr" class="err"></p>
+  <p class="lbl">집중 시간</p>
+  <div id="dur" style="display:flex;gap:8px"><button class="chip" data-v="10">10분</button><button class="chip on" data-v="15">15분</button><button class="chip" data-v="25">25분</button></div>
+</div>
+<div class="card t2" style="text-align:center">
+  <p id="mode" style="margin:0;font-size:16px;color:#8a8478">준비됐으면 시작!</p>
+  <p id="clock" style="margin:4px 0;font-size:66px;line-height:1.2">15:00</p>
+  <p id="nowtask" style="margin:0 0 12px;min-height:26px;font-size:18px"></p>
+  <div class="ruler"><div id="bar" style="height:100%;width:0;background:#7d9a85;transition:width .3s"></div></div>
+  <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+    <button id="start" class="main"><i class="ti ti-player-play"></i> 시작</button>
+    <button id="reset"><i class="ti ti-eraser"></i> 처음부터</button>
+    <button id="oops"><i class="ti ti-arrow-back-up"></i> 앗 딴짓했다</button>
+  </div>
+  <p id="msg" style="margin:12px 0 0;font-size:17px;color:#5a7a62;min-height:22px"></p>
+</div>
+<div class="stats">
+  <div class="stat"><i class="ti ti-star"></i><p class="s">오늘 완료</p><p id="done" class="n">0회</p></div>
+  <div class="stat"><i class="ti ti-arrow-back-up"></i><p class="s">돌아온 횟수</p><p id="back" class="n">0번</p></div>
+  <div class="stat"><i class="ti ti-clock"></i><p class="s">오늘 집중</p><p id="total" class="n">0분</p></div>
+</div>
+<div class="card t3">
+  <p class="lbl"><i class="ti ti-bulb"></i> 딴생각은 요기에!!</p>
+  <div style="display:flex;gap:8px;align-items:center"><input id="park" placeholder="유튜브 그 영상 보기" style="flex:1"><button id="addp" class="main"><i class="ti ti-plus"></i></button></div>
+  <p id="perr" class="err"></p>
+  <div id="plist"></div>
+</div>
+</div>
+<script>
+const $=id=>document.getElementById(id);
+const today=new Date().toDateString();
+let S={day:today,done:0,back:0,focused:0,park:[]};
+try{const s=JSON.parse(localStorage.getItem('focusApp'));if(s){S.park=s.park||[];if(s.day===today){S.done=s.done;S.back=s.back;S.focused=s.focused}}}catch(e){}
+const save=()=>{try{localStorage.setItem('focusApp',JSON.stringify(S))}catch(e){}};
+let mins=15,left=900,total=900,run=false,end=0,tick=null,breakMode=false;
+const fmt=s=>String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');
+const cheers=['좋아요, 다시 왔으니 된 거예요','괜찮아요! 돌아온 게 진짜 실력','딴짓은 누구나 해요. 다시 고고','숨 한 번 쉬고, 할 일 하나만 봐요'];
+function stats(){$('done').textContent=S.done+'회';$('back').textContent=S.back+'번';$('total').textContent=S.focused+'분'}
+function draw(){$('clock').textContent=fmt(left);$('bar').style.width=Math.round((1-left/total)*100)+'%';$('bar').style.background=breakMode?'#7b93a8':'#7d9a85';document.title=run?fmt(left)+' 집중 중':'집중 노트'}
+function beep(){try{const a=new (window.AudioContext||window.webkitAudioContext)();[0,.25,.5].forEach(t=>{const o=a.createOscillator(),g=a.createGain();o.frequency.value=880;g.gain.value=.15;o.connect(g);g.connect(a.destination);o.start(a.currentTime+t);o.stop(a.currentTime+t+.15)})}catch(e){}}
+function stop(){run=false;clearInterval(tick);$('start').innerHTML='<i class="ti ti-player-play"></i> '+(left<total?'계속':'시작')}
+function finish(){stop();beep();
+  if(!breakMode){S.done++;S.focused+=mins;save();stats();breakMode=true;total=left=300;$('mode').textContent='쉬는 시간 5분 (일어나서 물 한 잔!)';$('msg').textContent='한 판 끝! 정말 잘했어요';$('start').innerHTML='<i class="ti ti-player-play"></i> 휴식 시작'}
+  else{breakMode=false;total=left=mins*60;$('mode').textContent='쉬는 시간 끝, 다음 판 가 볼까요?';$('msg').textContent=''}
+  draw()}
+$('start').onclick=()=>{
+  if(run){stop();$('mode').textContent='잠깐 멈춤';return}
+  if(!breakMode&&!$('task').value.trim()){$('terr').textContent='할 일을 먼저 하나 적어 주세요';return}
+  run=true;end=Date.now()+left*1000;$('start').innerHTML='<i class="ti ti-player-pause"></i> 멈춤';
+  if(!breakMode){$('mode').textContent='집중하는 중';$('nowtask').textContent='지금은: '+$('task').value.trim();$('msg').textContent=''}
+  tick=setInterval(()=>{left=Math.max(0,Math.round((end-Date.now())/1000));draw();if(left<=0)finish()},250)};
+$('reset').onclick=()=>{stop();breakMode=false;total=left=mins*60;$('mode').textContent='준비됐으면 시작!';$('nowtask').textContent='';$('msg').textContent='';$('start').innerHTML='<i class="ti ti-player-play"></i> 시작';draw()};
+$('oops').onclick=()=>{S.back++;save();stats();$('msg').textContent=cheers[Math.floor(Math.random()*cheers.length)]};
+$('task').oninput=()=>$('terr').textContent='';
+document.querySelectorAll('#dur .chip').forEach(c=>c.onclick=()=>{if(run)return;document.querySelectorAll('#dur .chip').forEach(x=>x.classList.remove('on'));c.classList.add('on');mins=+c.dataset.v;if(!breakMode){total=left=mins*60;draw()}});
+function renderPark(){$('plist').innerHTML='';S.park.forEach((v,i)=>{const r=document.createElement('div');r.className='row';const sp=document.createElement('span');sp.style.flex='1';sp.textContent=v;const x=document.createElement('button');x.innerHT
