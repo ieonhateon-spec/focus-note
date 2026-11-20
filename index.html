@@ -90,6 +90,16 @@ function rp(){$('pl').innerHTML='';S.p.forEach((v,i)=>{const r=document.createEl
 function ap(){const v=$('pk').value.trim();if(!v){$('pe').textContent='딴생각을 적어 주세요';return}S.p.push(v);sv();rp();$('pk').value='';$('ms').textContent='적어 뒀으니 이제 잊어도 돼요'}
 $('ad').onclick=ap;$('pk').onkeydown=e=>{if(e.key==='Enter')ap()};$('pk').oninput=()=>$('pe').textContent='';
 st();rp();dr();
+const cv=document.createElement('canvas');cv.width=cv.height=180;const x=cv.getContext('2d');
+x.fillStyle='#7d9a85';x.fillRect(0,0,180,180);
+x.save();x.translate(90,95);x.rotate(-.07);x.fillStyle='#fffdf8';x.fillRect(-50,-56,100,112);
+x.strokeStyle='#e6dfd0';x.lineWidth=2;for(let y=-34;y<56;y+=18){x.beginPath();x.moveTo(-50,y);x.lineTo(50,y);x.stroke()}
+x.strokeStyle='#e0b4a8';x.beginPath();x.moveTo(-34,-56);x.lineTo(-34,56);x.stroke();
+x.strokeStyle='#3b3f45';x.lineWidth=3;x.lineCap='round';[[-22,42],[-4,54],[14,32]].forEach(([y,w])=>{x.beginPath();x.moveTo(-24,y);x.lineTo(-24+w,y);x.stroke()});x.restore();
+x.save();x.translate(90,40);x.rotate(-.1);x.fillStyle='#d6ba6ee6';x.fillRect(-26,-7,52,14);x.restore();
+x.fillStyle='#c9d0d8';x.beginPath();x.arc(132,136,21,0,7);x.fill();
+x.strokeStyle='#3b3f45';x.lineWidth=4;x.lineJoin='round';x.beginPath();x.moveTo(122,136);x.lineTo(129,143);x.lineTo(142,130);x.stroke();
+const ic=document.createElement('link');ic.rel='apple-touch-icon';ic.href=cv.toDataURL('image/png');document.head.append(ic);
 </script>
 </body>
 </html>
